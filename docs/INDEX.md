@@ -1,9 +1,3 @@
----
-cover: >-
-  https://rawcdn.githack.com/JoinColony/colonyNetwork/869c7d8233dcb1314b5fd3606e688ce8107d1c3c/docs/img/colonyNetwork_color.svg
-coverY: 0
----
-
 # Welcome!
 
 ## Colony Network Documentation
