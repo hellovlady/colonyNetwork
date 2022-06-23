@@ -1069,6 +1069,13 @@
   dependencies:
     antlr4ts "^0.5.0-alpha.4"
 
+"@solidity-parser/parser@^0.14.2":
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/@solidity-parser/parser/-/parser-0.14.2.tgz#2d8f2bddb217621df882ceeae7d7b42ae8664db3"
+  integrity sha512-10cr0s+MtRtqjEw0WFJrm2rwULN30xx7btd/v9cmqME2617/2M5MbHDkFIGIGTa7lwNw4bN9mVGfhlLzrYw8pA==
+  dependencies:
+    antlr4ts "^0.5.0-alpha.4"
+
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.npmjs.org/@szmarczak/http-timer/-/http-timer-1.1.2.tgz"
@@ -11357,11 +11364,6 @@ solidity-parser-antlr@^0.3.3:
   version "0.3.3"
   resolved "https://registry.npmjs.org/solidity-parser-antlr/-/solidity-parser-antlr-0.3.3.tgz"
   integrity sha512-RNUc18pjf7DLWs//WF+V+VnvrbetEbNFUYxm2JFbXU62G9WSu+nVyDxV5r+FG4wu8jom17vLdM/3I7bMBGfZ9g==
-
-solidity-parser-diligence@^0.4.18:
-  version "0.4.18"
-  resolved "https://registry.npmjs.org/solidity-parser-diligence/-/solidity-parser-diligence-0.4.18.tgz"
-  integrity sha512-mauO/qG2v59W9sOn5TYV2dS7+fvFKqIHwiku+TH82e1Yca4H8s6EDG12ZpXO2cmgLlCKX3FOqqC73aYLB8WwNg==
 
 solidity-steamroller@^1.1.0:
   version "1.1.0"
