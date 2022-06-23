@@ -22,9 +22,11 @@ import "./../../lib/dappsys/math.sol";
 import "./../common/EtherRouter.sol";
 import "./../colony/IColony.sol";
 import "./../colony/ColonyDataTypes.sol";
+import "./../colonyNetwork/IColonyNetwork.sol";
+import "./../patriciaTree/PatriciaTreeProofs.sol";
 
 
-abstract contract ColonyExtension is DSAuth, DSMath {
+abstract contract ColonyExtension is DSAuth, DSMath, PatriciaTreeProofs {
 
   uint256 constant UINT256_MAX = 2**256 - 1;
 
@@ -59,4 +61,38 @@ abstract contract ColonyExtension is DSAuth, DSMath {
     return address(colony);
   }
 
+  function checkReputation(
+    uint256 _skillId,
+    address _user,
+    bytes memory _key,
+    bytes memory _value,
+    uint256 _branchMask,
+    bytes32[] memory _siblings
+  )
+    internal
+    view
+    returns (uint256)
+  {
+    bytes32 rootHash = IColonyNetwork(colony.getColonyNetwork()).getReputationRootHash();
+    bytes32 impliedRoot = getImpliedRootHashKey(_key, _value, _branchMask, _siblings);
+    require(rootHash == impliedRoot, "expenditure-utils-invalid-root-hash");
+
+    uint256 reputationValue;
+    address keyColonyAddress;
+    uint256 keySkillId;
+    address keyUserAddress;
+
+    assembly {
+      reputationValue := mload(add(_value, 32))
+      keyColonyAddress := mload(add(_key, 20))
+      keySkillId := mload(add(_key, 52))
+      keyUserAddress := mload(add(_key, 72))
+    }
+
+    require(keyColonyAddress == address(colony), "expenditure-utils-invalid-colony-address");
+    require(keySkillId == _skillId, "expenditure-utils-invalid-skill-id");
+    require(keyUserAddress == _user, "expenditure-utils-invalid-user-address");
+
+    return reputationValue;
+  }
 }

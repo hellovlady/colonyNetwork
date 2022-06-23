@@ -22,11 +22,10 @@ import "./../colony/ColonyDataTypes.sol";
 import "./../colonyNetwork/IColonyNetwork.sol";
 import "./../common/BasicMetaTransaction.sol";
 import "./../common/ERC20Extended.sol";
-import "./../patriciaTree/PatriciaTreeProofs.sol";
 import "./../tokenLocking/ITokenLocking.sol";
 import "./ColonyExtension.sol";
 
-contract FundingQueue is ColonyExtension, PatriciaTreeProofs, BasicMetaTransaction {
+contract FundingQueue is ColonyExtension, BasicMetaTransaction {
 
   // Events
   event ProposalCreated(uint256 id, uint256 indexed fromPot, uint256 indexed toPot, address indexed token, uint256 amount);
@@ -203,8 +202,9 @@ contract FundingQueue is ColonyExtension, PatriciaTreeProofs, BasicMetaTransacti
     require(proposal.state == ProposalState.Inactive, "funding-queue-not-inactive");
     require(proposal.creator == msgSender(), "funding-queue-not-creator");
 
+    uint256 domainSkillId = colony.getDomain(proposals[_id].domainId).skillId;
+    proposal.domainTotalRep = checkReputation(domainSkillId, address(0x0), _key, _value, _branchMask, _siblings);
     proposal.state = ProposalState.Active;
-    proposal.domainTotalRep = checkReputation(_id, address(0x0), _key, _value, _branchMask, _siblings);
 
     uint256 stake = wmul(proposal.domainTotalRep, STAKE_FRACTION);
     colony.obligateStake(msgSender(), proposal.domainId, stake);
@@ -229,7 +229,8 @@ contract FundingQueue is ColonyExtension, PatriciaTreeProofs, BasicMetaTransacti
     require(proposal.state == ProposalState.Active, "funding-queue-proposal-not-active");
     require(_id != _newPrevId, "funding-queue-cannot-insert-after-self"); // NOTE: this may be redundant
 
-    uint256 userRep = checkReputation(_id, msgSender(), _key, _value, _branchMask, _siblings);
+    uint256 domainSkillId = colony.getDomain(proposals[_id].domainId).skillId;
+    uint256 userRep = checkReputation(domainSkillId, msgSender(), _key, _value, _branchMask, _siblings);
     require(_backing <= userRep, "funding-queue-insufficient-reputation");
 
     // Update the user's reputation backing
@@ -419,41 +420,6 @@ contract FundingQueue is ColonyExtension, PatriciaTreeProofs, BasicMetaTransacti
     } else {
       return 999988539298800050;
     }
-  }
-
-  function checkReputation(
-    uint256 _id,
-    address _who,
-    bytes memory _key,
-    bytes memory _value,
-    uint256 _branchMask,
-    bytes32[] memory _siblings
-  )
-    internal view returns (uint256)
-  {
-    bytes32 impliedRoot = getImpliedRootHashKey(_key, _value, _branchMask, _siblings);
-    require(colonyNetwork.getReputationRootHash() == impliedRoot, "funding-queue-invalid-root-hash");
-
-    uint256 reputationValue;
-    address keyColonyAddress;
-    uint256 keySkill;
-    address keyUserAddress;
-
-    assembly {
-      reputationValue := mload(add(_value, 32))
-      keyColonyAddress := mload(add(_key, 20))
-      keySkill := mload(add(_key, 52))
-      keyUserAddress := mload(add(_key, 72))
-    }
-
-    require(keyColonyAddress == address(colony), "funding-queue-invalid-colony-address");
-    // This is the 'dangerous' strict equality.
-    // This equality is numerical, but does have to be exact. It is therefore necessary to be disabled.
-    // slither-disable-next-line incorrect-equality
-    require(keySkill == colony.getDomain(proposals[_id].domainId).skillId, "funding-queue-invalid-skill-id");
-    require(keyUserAddress == _who, "funding-queue-invalid-user-address");
-
-    return reputationValue;
   }
 
   function wpow(uint256 x, uint256 n) internal pure returns (uint256) {
