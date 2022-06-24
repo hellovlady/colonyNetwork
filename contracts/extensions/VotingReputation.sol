@@ -122,7 +122,7 @@ contract VotingReputation is ColonyExtension, PatriciaTreeProofs, BasicMetaTrans
   /// @notice Returns the version of the extension
   /// @return version The extension's version number
   function version() public pure override returns (uint256 version) {
-    return 4;
+    return 5;
   }
 
   /// @notice Install the extension

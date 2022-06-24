@@ -96,7 +96,7 @@ contract CoinMachine is ColonyExtension, BasicMetaTransaction {
   /// @notice Returns the version of the extension
   /// @return version The extension's version number
   function version() public override pure returns (uint256 version) {
-    return 5;
+    return 6;
   }
 
   /// @notice Configures the extension
