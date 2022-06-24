@@ -1076,7 +1076,7 @@ contract VotingReputation is ColonyExtension, PatriciaTreeProofs, BasicMetaTrans
   }
 
   function createClaimDelayAction(bytes memory action, uint256 value)
-    public
+    internal
     returns (bytes memory)
   {
     // See https://solidity.readthedocs.io/en/develop/abi-spec.html#use-of-dynamic-types
