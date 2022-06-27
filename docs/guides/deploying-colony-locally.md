@@ -70,7 +70,7 @@ Summary
 The migration scripts will also create a file called `etherrouter-address.json`. It contains the address for the main entry point for the Colony Contracts and can be instantiated as the `ColonyNetwork` contract. From this one you will be able to figure out all relevant addresses by just calling the corresponding functions on the `ColonyNetwork` contract.
 
 {% hint style="info" %}
-&#x20;Why `etherrouter-address`? Colony uses the so called _EtherRouter_ pattern for upgradeable Smart Contracts. Read more about that [here](https://blog.colony.io/writing-upgradeable-contracts-in-solidity-6743f0eecc88/). Or watch [this video](https://www.youtube.com/watch?v=Sw9O2LWgWC0). It's up to you :)
+Why `etherrouter-address`? Colony uses the so called _EtherRouter_ pattern for upgradeable Smart Contracts. Read more about that [here](https://blog.colony.io/writing-upgradeable-contracts-in-solidity-6743f0eecc88/). Or watch [this video](https://www.youtube.com/watch?v=Sw9O2LWgWC0). It's up to you :)
 {% endhint %}
 
 What does that mean in practice? Act as if the `etherrouter-address` is the Address for the deployed `ColonyNetwork` contract.
@@ -117,12 +117,16 @@ Check the logs of the `truffle migrate` command we issued earlier. The MetaColon
    > Total cost:                   0 ETH
 ```
 
-****:tada:**Congratulations, you've successfully deployed the ColonyNetwork** :tada:****
+:tada:**Congratulations, you've successfully deployed the ColonyNetwork** :tada:
 
 Where to go from here? Well, you can try to issue a few more `eth_call` commands to retrieve data or even make a custom manual transaction?
 
 Or just go down the easy path! We created [Colony SDK](https://app.gitbook.com/o/-MTaEZ\_7xhxpButTDDNj/s/slSiNQHJDrgYgciBacVr/), to make it really easy to talk to the Colony contracts. With the knowledge you just acquired you can even test it out locally. Or try our more involved solution [ColonyJS](https://app.gitbook.com/o/-MTaEZ\_7xhxpButTDDNj/s/QcRjzRciEwod6UqfA3ta/) that is quite a bit more flexible - we're using it to power the Colony Dapp!
 
-## Setting up the Reputation Oracle (optional)
+### Where to go from here?
 
-If you would like to access the reputation related functionality within your development work (mainly to get a user's reputation), please see [this guide](reputation-oracle-setup.md).
+If you would like to access the reputation related functionality within your development work (mainly to get a user's reputation), please see the following guide:
+
+{% content-ref url="reputation-oracle-setup.md" %}
+[reputation-oracle-setup.md](reputation-oracle-setup.md)
+{% endcontent-ref %}

@@ -14,6 +14,10 @@ You will need:
 
 The Colony Network contracts are written in [Solidity](https://soliditylang.org/) and are built, tested and deployed using the [Truffle Suite](https://trufflesuite.com/). With the above dependencies in place you can just follow the instructions below and the Colony Network build scripts will sort out everything else for you.
 
+{% hint style="info" %}
+If you're a Dapp developer looking to integrate with colony, we recommend using [The Colony SDK](https://app.gitbook.com/o/-MTaEZ\_7xhxpButTDDNj/s/slSiNQHJDrgYgciBacVr/) as an entry point as it is the fastest way to start building with Colony. There you'll find analogous instructions better suited to building applications on top of the colonyNetwork. We also have created some [examples](https://github.com/JoinColony/colonySDK/tree/main/examples) that you can try out [live in your browser](https://joincolony.github.io/colonySDK/)!
+{% endhint %}
+
 ## Cloning the repository and preparing the dependencies
 
 Clone the repository including all its git submodules using this command:
@@ -69,11 +73,19 @@ DISABLE_DOCKER=true yarn provision:token:contracts
 
 **Great!** Now you're ready to compile the contracts and run the tests.
 
+### Where to go from here?
+
+You're already able to make modifications to the contracts and run those against the tests. Next step is to deploy the Colony Network contracts locally.
+
+{% content-ref url="guides/deploying-colony-locally.md" %}
+[deploying-colony-locally.md](guides/deploying-colony-locally.md)
+{% endcontent-ref %}
+
 ## Troubleshooting
 
 ### Q: There's a Python error, what's going on?
 
-A: Some ColonyNetwork dependencies require Python in older versions. To get around that, [pyenv](https://github.com/pyenv/pyenv) has been proven very useful. Install pyenv for your environment according to their [guide](https://github.com/pyenv/pyenv#installation), then issue the following command in the `colonyNetwork` directory:&#x20;
+A: Some ColonyNetwork dependencies require Python in older versions. To get around that, [pyenv](https://github.com/pyenv/pyenv) has been proven very useful. Install pyenv for your environment according to their [guide](https://github.com/pyenv/pyenv#installation), then issue the following command in the `colonyNetwork` directory:
 
 ```bash
 pyenv install 2.7.18
